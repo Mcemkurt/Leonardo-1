@@ -8,6 +8,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QAction
 from PyQt5.uic import loadUi
 from leonardo_window import Ui_Leonardo
 
@@ -101,11 +102,12 @@ class Ui_MainWindow(object):
         __sortingEnabled = self.treeWidget.isSortingEnabled()
         self.treeWidget.setSortingEnabled(False)
         self.treeWidget.topLevelItem(0).setText(0, _translate("MainWindow", "New Item"))
-        self.treeWidget.topLevelItem(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
+        self.treeWidget.topLevelItem(0).child(0).setText(0, _translate("MainWindow", "İşlem 1"))
         self.treeWidget.topLevelItem(1).setText(0, _translate("MainWindow", "New Item"))
         self.treeWidget.topLevelItem(1).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.treeWidget.topLevelItem(1).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.treeWidget.topLevelItem(2).setText(0, _translate("MainWindow", "Canlı Destek"))
+        self.treeWidget.topLevelItem(1).child(0).child(0).setText(0, _translate("MainWindow", "İşlem 2"))
+        self.treeWidget.topLevelItem(2).setText(0, _translate("MainWindow", "Canli Destek"))
+
         self.treeWidget.setSortingEnabled(__sortingEnabled)
         self.menuDosya.setTitle(_translate("MainWindow", "Dosya"))
         self.menuD_zenle.setTitle(_translate("MainWindow", "Düzenle"))
@@ -118,12 +120,27 @@ class Ui_MainWindow(object):
 
     def addTabs(self):
         have_child = self.treeWidget.currentItem().childCount()
-        print("Debug")
 
-        if(have_child == 0):
-           self.tabWidget.addTab(QtWidgets.QWidget(),"Tab"+ str(self.tabWidget.count()+1),)
+
+
+        if(have_child == 0 and self.treeWidget.currentItem() == self.treeWidget.topLevelItem(2)):
+            text = QtWidgets.QLabel(self.tabWidget.currentWidget())
+            text.setText("Canli Destek")
+            self.tabWidget.addTab(text,"Canlı Destek")
+
+
+        elif(have_child == 0 and self.treeWidget.currentItem() == self.treeWidget.topLevelItem(1).child(0).child(0)):
+            text = QtWidgets.QLabel(self.tabWidget.currentWidget())
+            text.setText("İşlem 2")
+            self.tabWidget.addTab(text, "İşlem 2")
+
+        elif(have_child == 0 and self.treeWidget.currentItem() == self.treeWidget.topLevelItem(0).child(0)):
+            text = QtWidgets.QLabel(self.tabWidget.currentWidget())
+            text.setText("İşlem 1")
+            self.tabWidget.addTab(text, "İşlem 1")
+
         else:
-            pass
+            print("işlem yok")
 
     def leonardoWindow(self):
         self.leonardo_window.show()
