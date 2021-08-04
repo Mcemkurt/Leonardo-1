@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/live_support.png</file>
+    <file>icons/leonardo.jpg</file>
+  </qresource>
+</RCC>
